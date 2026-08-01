@@ -3,6 +3,7 @@ import { useEffect, useState } from 'react';
 import SignaturePad from '../../../components/SignaturePad';
 import { Center, PAGE_STYLE } from '../../../components/formUI';
 import DocumentContent from '../../../components/DocumentContent';
+import SectionNav from '../../../components/SectionNav';
 
 export default function SignPage({ params }) {
   const { token } = params;
@@ -14,6 +15,8 @@ export default function SignPage({ params }) {
   const [parentSig, setParentSig] = useState('');
   const [validationError, setValidationError] = useState('');
   const [confirmOpen, setConfirmOpen] = useState(false);
+  const [pdfLoading, setPdfLoading] = useState(false);
+  const [pdfError, setPdfError] = useState('');
 
   const [f, setF] = useState({
     school: '', grade: '', studentNameConfirm: '', parentName: '',
@@ -92,7 +95,35 @@ export default function SignPage({ params }) {
 
   if (status === 'loading') return <Center>불러오는 중...</Center>;
   if (status === 'notfound') return <Center>유효하지 않은 링크입니다. 학원에 문의해주세요.</Center>;
-  if (status === 'already') return <Center>✅ 이미 서명이 완료된 서류입니다.<br />수정 및 재제출은 불가합니다. 문의사항은 학원(02-877-0717)으로 연락해주세요.</Center>;
+  if (status === 'already') {
+    return (
+      <Center>
+        ✅ 이미 서명이 완료된 서류입니다.
+        <br />수정 및 재제출은 불가합니다. 문의사항은 학원(02-877-0717)으로 연락해주세요.
+        <br />
+        <button
+          onClick={async () => {
+            setPdfError('');
+            setPdfLoading(true);
+            try {
+              const res = await fetch(`/api/sign/${token}/pdf-url`);
+              const d = await res.json();
+              if (res.ok && d.url) window.open(d.url, '_blank');
+              else setPdfError(d.error === 'not_submitted' ? 'PDF를 아직 준비 중입니다. 잠시 후 다시 시도해주세요.' : 'PDF를 불러오지 못했습니다.');
+            } catch (e) {
+              setPdfError('PDF를 불러오지 못했습니다.');
+            }
+            setPdfLoading(false);
+          }}
+          disabled={pdfLoading}
+          style={{ marginTop: 16, padding: '10px 24px', fontSize: 14, fontWeight: 700, color: '#fff', background: pdfLoading ? '#999' : '#18264A', border: 'none', borderRadius: 8, cursor: pdfLoading ? 'default' : 'pointer' }}
+        >
+          {pdfLoading ? '불러오는 중...' : '제출한 내용 보기 (PDF)'}
+        </button>
+        {pdfError && <div style={{ marginTop: 10, color: 'crimson', fontSize: 13 }}>{pdfError}</div>}
+      </Center>
+    );
+  }
   if (status === 'done') {
     return (
       <Center>
@@ -123,6 +154,7 @@ export default function SignPage({ params }) {
         </p>
       </div>
 
+      <SectionNav />
 
       <DocumentContent link={link} f={f} set={set} disabled={disabled} dateStr={dateStr} studentSig={studentSig} parentSig={parentSig} />
 
