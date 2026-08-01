@@ -92,7 +92,7 @@ export function Center({ children }) {
     </div>
   );
 }
-export const ADDRESS_TEXT = '서울시 관악구 남부순환로 1791 서원빌딩 4층';
+export const ADDRESS_TEXT = '서울시 관악구 남부순환로 1761 서원빌딩 4층';
 export const PHONE_TEXT = '02-877-0717';
 
 export function InfoFooter() {
