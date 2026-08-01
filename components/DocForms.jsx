@@ -7,7 +7,7 @@ export default function DocForms({ link, f, set, disabled, dateStr, studentSig, 
   return (
     <>
 
-      <div style={PAGE_STYLE}>
+      <div style={PAGE_STYLE} id="sec-rules">
         <div style={H1}>{program.academyName} 서울대캠퍼스</div>
         <div style={H1}>수업규정 학생 동의서</div>
 
@@ -56,7 +56,7 @@ export default function DocForms({ link, f, set, disabled, dateStr, studentSig, 
         <BarFooter program={program} />
       </div>
 
-      <div style={PAGE_STYLE}>
+      <div style={PAGE_STYLE} id="sec-privacy">
         <div style={H1}>{program.academyName} 서울대캠퍼스</div>
         <div style={H1}>개인정보 및 초상권 동의서</div>
         <p style={P}>본 학원은 아래와 같이 개인정보 수집·이용 및 CCTV 이용에 대한 동의를 받고자 합니다.</p>
@@ -97,7 +97,7 @@ export default function DocForms({ link, f, set, disabled, dateStr, studentSig, 
           <span style={LABEL}>학부모성명</span>
           <input style={INPUT} disabled={disabled} placeholder="학부모 성함" value={f.parentName} onChange={(e) => set('parentName', e.target.value)} />
         </div>
-        <div style={{ marginTop: 12, display: 'flex', gap: 20 }}>
+        <div style={{ marginTop: 12, display: 'flex', gap: 20, flexWrap: 'wrap' }}>
           <SignatureStamp label="학생 서명(또는 인)" dataUrl={studentSig} />
           <SignatureStamp label="학부모 서명(또는 인)" dataUrl={parentSig} />
         </div>
@@ -105,7 +105,7 @@ export default function DocForms({ link, f, set, disabled, dateStr, studentSig, 
         <BarFooter program={program} />
       </div>
 
-      <div style={PAGE_STYLE}>
+      <div style={PAGE_STYLE} id="sec-witzen1">
         <div style={H1}>출결정보 시스템 위트젠</div>
         <div style={H1}>개인정보 활용 동의서</div>
         <p style={P}>위트젠은 {program.academyNameShort} 서울대캠퍼스 학생 등·하원 시 알림 문자를 전송하는 회사입니다. 당 회사에 정보제공을 위한 동의서입니다.</p>
@@ -149,14 +149,14 @@ export default function DocForms({ link, f, set, disabled, dateStr, studentSig, 
         </p>
 
         <div style={FIELD_ROW}><span style={LABEL}>날짜</span><span style={{ ...INPUT, border: 'none', padding: '7px 0' }}>{dateStr}</span></div>
-        <div style={{ marginTop: 10, display: 'flex', gap: 24 }}>
+        <div style={{ marginTop: 10, display: 'flex', gap: 24, flexWrap: 'wrap' }}>
           <SignatureStamp label="제공자(학생) 서명" dataUrl={studentSig} />
           <SignatureStamp label="법정대리인(학부모) 서명" dataUrl={parentSig} />
         </div>
         <BarFooter program={program} />
       </div>
 
-      <div style={PAGE_STYLE}>
+      <div style={PAGE_STYLE} id="sec-witzen2">
         <div style={H1}>위트젠 출결관리 서비스 관련 조항</div>
 
         <div style={SEC_TITLE}>제1조 (개인정보의 처리 목적)</div>
@@ -202,7 +202,7 @@ export default function DocForms({ link, f, set, disabled, dateStr, studentSig, 
         <CheckRow checked={f.witzenTermsAgree} disabled={disabled} onChange={(v) => set('witzenTermsAgree', v)}>위트젠 출결관리 서비스 관련 조항의 모든 내용을 확인하였으며 이에 동의합니다.</CheckRow>
 
         <div style={FIELD_ROW}><span style={LABEL}>날짜</span><span style={{ ...INPUT, border: 'none', padding: '7px 0' }}>{dateStr}</span></div>
-        <div style={{ marginTop: 10, display: 'flex', gap: 24 }}>
+        <div style={{ marginTop: 10, display: 'flex', gap: 24, flexWrap: 'wrap' }}>
           <SignatureStamp label="학생 서명(또는 인)" dataUrl={studentSig} />
           <SignatureStamp label="학부모 서명(또는 인)" dataUrl={parentSig} />
         </div>

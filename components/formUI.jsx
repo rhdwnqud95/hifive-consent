@@ -7,6 +7,7 @@ export const PAGE_STYLE = {
   padding: '36px 40px',
   boxShadow: '0 2px 14px rgba(0,0,0,0.06)',
   boxSizing: 'border-box',
+  scrollMarginTop: 72,
 };
 
 export const H1 = { fontSize: 19, fontWeight: 700, textAlign: 'center', marginBottom: 4 };
@@ -73,9 +74,9 @@ export function CheckRow({ checked, onChange, disabled, children }) {
 }
 export function SignatureStamp({ label, dataUrl }) {
   return (
-    <div style={{ display: 'inline-block' }}>
+    <div style={{ display: 'inline-block', width: 'clamp(110px, 42vw, 220px)', maxWidth: '100%', boxSizing: 'border-box' }}>
       <div style={{ fontSize: 12, color: '#666', marginBottom: 4 }}>{label}</div>
-      <div style={{ border: '1px solid #ccc', borderRadius: 6, background: '#fbfbfb', width: 220, height: 90, display: 'flex', alignItems: 'center', justifyContent: 'center', overflow: 'hidden' }}>
+      <div style={{ border: '1px solid #ccc', borderRadius: 6, background: '#fbfbfb', width: '100%', height: 'clamp(50px, 17vw, 90px)', display: 'flex', alignItems: 'center', justifyContent: 'center', overflow: 'hidden', boxSizing: 'border-box' }}>
         {dataUrl ? (
           <img src={dataUrl} alt={label} style={{ maxWidth: '100%', maxHeight: '100%' }} />
         ) : (

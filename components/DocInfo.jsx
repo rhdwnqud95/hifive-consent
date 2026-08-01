@@ -8,7 +8,7 @@ export default function DocInfo({ link }) {
   return (
     <>
       {/* ---- 학원 생활 안내 (정보성 콘텐츠, 원본 1~5페이지) ---- */}
-      <div style={PAGE_STYLE}>
+      <div style={PAGE_STYLE} id="sec-info">
         <div style={H1}>{program.academyName} 학원 생활 안내</div>
         <p style={P}>저희 {program.academyName}에 보내주신 관심과 성원에 감사드리며, 귀댁의 자녀를 안심하고 맡기실 수 있도록 항상 노력하겠습니다. 또한 자녀의 학원생활에 도움을 주고자 학원 생활 안내문을 보내드리니 참고하시고 많은 관심과 지도 부탁드립니다.</p>
 
