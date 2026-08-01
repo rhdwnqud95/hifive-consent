@@ -81,8 +81,11 @@ export default function AdminPage() {
     setCreating(false);
   }
 
-  async function handleDelete(id) {
-    if (!confirm('이 링크를 삭제할까요? (서명 완료된 건은 삭제할 수 없습니다)')) return;
+  async function handleDelete(id, submitted) {
+    const msg = submitted
+      ? '이 링크를 삭제할까요? 서명 완료된 서류이며, 저장된 PDF도 함께 영구 삭제됩니다. 이 작업은 되돌릴 수 없습니다.'
+      : '이 링크를 삭제할까요?';
+    if (!confirm(msg)) return;
     const res = await fetch(`/api/admin/links/${id}`, { method: 'DELETE' });
     if (res.ok) {
       loadLinks();
@@ -193,14 +196,12 @@ export default function AdminPage() {
                 </td>
                 <td style={td}>
                   {!l.submitted && (
-                    <>
-                      <button onClick={() => copyLink(`${origin}/sign/${l.token}`)} style={linkBtn}>링크복사</button>
-                      <button onClick={() => handleDelete(l.id)} style={linkBtn}>삭제</button>
-                    </>
+                    <button onClick={() => copyLink(`${origin}/sign/${l.token}`)} style={linkBtn}>링크복사</button>
                   )}
                   {l.submitted && (
                     <button onClick={() => openPdf(l.pdf_path)} style={linkBtn}>PDF 보기/인쇄</button>
                   )}
+                  <button onClick={() => handleDelete(l.id, l.submitted)} style={{ ...linkBtn, color: '#c0392b', borderColor: '#e0b4b4' }}>삭제</button>
                 </td>
               </tr>
             ))}
