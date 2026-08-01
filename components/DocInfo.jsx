@@ -17,7 +17,7 @@ export default function DocInfo({ link }) {
         <p style={{ ...P, fontSize: 12.5, color: '#666' }}>· 계좌번호: {program.bank}</p>
         <p style={{ ...P, fontSize: 12.5, color: '#666' }}>· 교육비 납부는 현금, 카드, 계좌이체 모두 가능합니다.</p>
         <p style={{ ...P, fontSize: 12.5, color: '#666' }}>· 비대면 카드결제 희망 시 원내 대표번호 02-877-0717로 전화연락 주시면 상세히 안내 도와드리겠습니다.</p>
-        {isAni && <p style={{ ...P, fontSize: 12.5, color: '#c11' }}>· {program.cashReceiptNote}</p>}
+        {isAni && program.cashReceiptNote && <p style={{ ...P, fontSize: 12.5, color: '#c11' }}>· {program.cashReceiptNote}</p>}
 
         <div style={SEC_TITLE}>2. 학원 수업시간 및 교육상담</div>
         <ul style={{ paddingLeft: 18 }}>
@@ -160,7 +160,7 @@ export default function DocInfo({ link }) {
           <li style={LI}>교육비 납부는 선납으로 하며 여행, 가족행사, 시험공부 등 개인적 사정에 의한 결강은 인정하지 않으며, 수강기간에 포함됩니다. (본인 희망 시 시험에 의한 결강은 보충수업 가능)</li>
           <li style={{ ...LI, color: '#c11' }}>교육비 납부일은 매월 1일이며, 납부일 기준으로 미납 10일 경과 시 수업을 받을 수 없습니다. (20일 이내 수강료 납부일자를 확정 받을 시 수업 재개)</li>
           <li style={LI}>개인소득공제 및 지출증빙(현금영수증)은 교육비 납부 전 발급받으실 핸드폰번호 혹은 사업자등록번호를 미리 말씀해주셔야 가능합니다.</li>
-          {isAni && <li style={{ ...LI, color: '#c11' }}>{program.cashReceiptNote}</li>}
+          {isAni && program.cashReceiptNote && <li style={{ ...LI, color: '#c11' }}>{program.cashReceiptNote}</li>}
           <li style={LI}>교육청에서 인가되지 않은 여행, 가족행사, 시험공부 등의 개인적 사유는 이월 및 환불이 불가합니다. (교육비 반환기준에 의거)</li>
           <li style={LI}>교육비 반환 기준은 「학원의 설립·운영 및 과외교습에 관한 법률 시행령」 제18조 제3항의 교습비등 반환기준에 의거합니다.</li>
         </ul>
