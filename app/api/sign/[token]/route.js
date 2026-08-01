@@ -51,11 +51,17 @@ export async function POST(req, { params }) {
 
     const doc = await PDFDocument.create();
     doc.registerFontkit(fontkit);
-    // NOTE: subset:true triggers a known pdf-lib/fontkit bug with large CJK
-    // fonts (glyphs randomly dropped, producing garbled/missing Korean text
-    // in PDF viewers). Embedding the full font avoids it; the PDF is a few
-    // MB larger but renders correctly everywhere.
-    const font = await doc.embedFont(fontBytes, { subset: false });
+    // NOTE: pdf-lib/fontkit has two separate bugs with very large CJK fonts:
+    // - subset:true on a huge (20k+ glyph) font silently drops glyphs
+    //   (garbled/missing Korean text).
+    // - subset:false skips writing a correct per-glyph /W (width) array,
+    //   so glyphs render right but PDF viewers use the wrong advance width,
+    //   causing text to overflow past the page edge.
+    // Fix: pre-subset the font ourselves (see lib/asset_koreanFont.js) down
+    // to complete modern Hangul + Latin + the specific symbols this app
+    // uses (~11k glyphs), which is small enough that pdf-lib's own
+    // subset:true works correctly (both glyphs and widths are right).
+    const font = await doc.embedFont(fontBytes, { subset: true });
 
     const coverLogo = await doc.embedPng(Buffer.from(isAni ? coverTitleAniBase64 : coverTitleBase64, 'base64'));
     const docLogo = await doc.embedPng(Buffer.from(isAni ? docLogoAniBase64 : docLogoBase64, 'base64'));
