@@ -51,7 +51,11 @@ export async function POST(req, { params }) {
 
     const doc = await PDFDocument.create();
     doc.registerFontkit(fontkit);
-    const font = await doc.embedFont(fontBytes, { subset: true });
+    // NOTE: subset:true triggers a known pdf-lib/fontkit bug with large CJK
+    // fonts (glyphs randomly dropped, producing garbled/missing Korean text
+    // in PDF viewers). Embedding the full font avoids it; the PDF is a few
+    // MB larger but renders correctly everywhere.
+    const font = await doc.embedFont(fontBytes, { subset: false });
 
     const coverLogo = await doc.embedPng(Buffer.from(isAni ? coverTitleAniBase64 : coverTitleBase64, 'base64'));
     const docLogo = await doc.embedPng(Buffer.from(isAni ? docLogoAniBase64 : docLogoBase64, 'base64'));
